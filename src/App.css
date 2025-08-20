@@ -349,6 +349,63 @@ body {
   font-size: 15px;
 }
 
+/* Module Viewer */
+.module-viewer {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.module-viewer h3 {
+  color: #2d3748;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.module-viewer table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.module-viewer th,
+.module-viewer td {
+  border: 1px solid #e2e8f0;
+  padding: 12px 8px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.module-viewer th {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.module-viewer td {
+  color: #2d3748;
+}
+
+.module-viewer tbody tr:nth-child(even) {
+  background-color: #f7fafc;
+}
+
+.module-viewer tbody tr:hover {
+  background-color: #edf2f7;
+  transition: background-color 0.2s ease;
+}
+
 /* Overall GPA Display */
 .overall-gpa {
   margin-top: 30px;
@@ -429,5 +486,14 @@ body {
   .overall-gpa {
     font-size: 18px;
     padding: 14px 18px;
+  }
+
+  .module-viewer table {
+    font-size: 12px;
+  }
+
+  .module-viewer th,
+  .module-viewer td {
+    padding: 8px 4px;
   }
 }

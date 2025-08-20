@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AddCourseForm from "./AddCourseForm";
+import ModuleViewer from "./ModuleViewer";
 import "../App.css";
 
 const Calculator = () => {
@@ -24,6 +25,17 @@ const Calculator = () => {
     "D": 1.0,
     "F": 0.0,
   };
+
+  // Sample modules data for ModuleViewer
+  const modules = semesters.flatMap(sem => 
+    sem.courses.map(course => ({
+      code: course.code,
+      title: course.title,
+      credits: course.credit,
+      grade: course.grade,
+      semester: sem.name
+    }))
+  );
 
   const handleAddCourse = (course, semesterIndex) => {
     const newSemesters = [...semesters];
@@ -148,6 +160,9 @@ const Calculator = () => {
           )}
         </div>
       ))}
+
+      {/* Module Viewer - only show if there are courses */}
+      {modules.length > 0 && <ModuleViewer modules={modules} />}
 
       {/* Overall GPA */}
       {semesters.some((s) => s.courses.length > 0) && (

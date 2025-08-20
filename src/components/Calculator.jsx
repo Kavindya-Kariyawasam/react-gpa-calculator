@@ -10,30 +10,36 @@ const Calculator = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [removedStack, setRemovedStack] = useState([]); // stack for multiple undo
 
+  const handleReset = () => {
+    setSemesters([{ name: "Semester 1", courses: [] }]); // Reset to initial state
+    setRemovedStack([]); // Clear undo history
+    setShowAddForm(false); // Close add form if open
+  };
+
   // GPA values for each grade
   const gradePoints = {
     "A+": 4.0,
-    "A": 4.0,
+    A: 4.0,
     "A-": 3.7,
     "B+": 3.3,
-    "B": 3.0,
+    B: 3.0,
     "B-": 2.7,
     "C+": 2.3,
-    "C": 2.0,
+    C: 2.0,
     "C-": 1.7,
     "D+": 1.3,
-    "D": 1.0,
-    "F": 0.0,
+    D: 1.0,
+    F: 0.0,
   };
 
   // Sample modules data for ModuleViewer
-  const modules = semesters.flatMap(sem => 
-    sem.courses.map(course => ({
+  const modules = semesters.flatMap((sem) =>
+    sem.courses.map((course) => ({
       code: course.code,
       title: course.title,
       credits: course.credit,
       grade: course.grade,
-      semester: sem.name
+      semester: sem.name,
     }))
   );
 
@@ -78,6 +84,9 @@ const Calculator = () => {
     return totalCredits ? (totalPoints / totalCredits).toFixed(2) : 0;
   };
 
+  // Check if there's any data to reset
+  const hasData = modules.length > 0 || semesters.length > 1;
+
   return (
     <div className="calculator">
       <div className="button-container">
@@ -98,6 +107,11 @@ const Calculator = () => {
         {removedStack.length > 0 && (
           <button onClick={handleUndo} className="undo-btn">
             Undo ({removedStack.length})
+          </button>
+        )}
+        {hasData && (
+          <button onClick={handleReset} className="reset-btn">
+            Reset All
           </button>
         )}
       </div>

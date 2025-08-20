@@ -406,6 +406,31 @@ body {
   transition: background-color 0.2s ease;
 }
 
+/* Reset Button */
+.reset-btn {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reset-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #c53030 0%, #9c2a2a 100%);
+}
+
+.reset-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 /* Overall GPA Display */
 .overall-gpa {
   margin-top: 30px;
@@ -445,7 +470,9 @@ body {
   }
 
   .add-course-btn,
-  .add-semester-btn {
+  .add-semester-btn,
+  .undo-btn,
+  .reset-btn {
     width: 100%;
   }
 

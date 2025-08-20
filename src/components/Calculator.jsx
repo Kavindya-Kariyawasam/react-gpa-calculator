@@ -7,7 +7,7 @@ const Calculator = () => {
     { name: "Semester 1", courses: [] },
   ]);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [removedCourses, setRemovedCourses] = useState([]);
+  const [removedStack, setRemovedStack] = useState([]); // stack for multiple undo
 
   // GPA values for each grade
   const gradePoints = {
@@ -33,30 +33,24 @@ const Calculator = () => {
 
   const handleRemoveCourse = (semIndex, courseIndex) => {
     const courseToRemove = semesters[semIndex].courses[courseIndex];
-
-    // remove from semester
     const newSemesters = [...semesters];
     newSemesters[semIndex].courses.splice(courseIndex, 1);
     setSemesters(newSemesters);
 
-    // save to removedCourses for undo
-    setRemovedCourses([
-      ...removedCourses,
+    setRemovedStack([
+      ...removedStack,
       { course: courseToRemove, semIndex, courseIndex },
     ]);
   };
 
-  const handleUndoRemove = () => {
-    const lastRemoved = removedCourses[removedCourses.length - 1];
-    if (!lastRemoved) return;
-
+  const handleUndo = () => {
+    if (removedStack.length === 0) return;
+    const lastRemoved = removedStack[removedStack.length - 1];
     const { course, semIndex, courseIndex } = lastRemoved;
     const newSemesters = [...semesters];
-    newSemesters[semIndex].courses.splice(courseIndex, 0, course); // restore at original position
+    newSemesters[semIndex].courses.splice(courseIndex, 0, course);
     setSemesters(newSemesters);
-
-    // update removedCourses stack
-    setRemovedCourses(removedCourses.slice(0, -1));
+    setRemovedStack(removedStack.slice(0, -1));
   };
 
   // Function to calculate GPA
@@ -89,9 +83,9 @@ const Calculator = () => {
         >
           Add Semester
         </button>
-        {removedCourses.length > 0 && (
-          <button onClick={handleUndoRemove} className="undo-btn">
-            Undo Remove
+        {removedStack.length > 0 && (
+          <button onClick={handleUndo} className="undo-btn">
+            Undo ({removedStack.length})
           </button>
         )}
       </div>

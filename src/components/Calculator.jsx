@@ -7,6 +7,7 @@ const Calculator = () => {
     { name: "Semester 1", courses: [] },
   ]);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [removedCourses, setRemovedCourses] = useState([]);
 
   // GPA values for each grade
   const gradePoints = {
@@ -28,6 +29,34 @@ const Calculator = () => {
     const newSemesters = [...semesters];
     newSemesters[semesterIndex].courses.push({ ...course, grade: "A" });
     setSemesters(newSemesters);
+  };
+
+  const handleRemoveCourse = (semIndex, courseIndex) => {
+    const courseToRemove = semesters[semIndex].courses[courseIndex];
+
+    // remove from semester
+    const newSemesters = [...semesters];
+    newSemesters[semIndex].courses.splice(courseIndex, 1);
+    setSemesters(newSemesters);
+
+    // save to removedCourses for undo
+    setRemovedCourses([
+      ...removedCourses,
+      { course: courseToRemove, semIndex, courseIndex },
+    ]);
+  };
+
+  const handleUndoRemove = () => {
+    const lastRemoved = removedCourses[removedCourses.length - 1];
+    if (!lastRemoved) return;
+
+    const { course, semIndex, courseIndex } = lastRemoved;
+    const newSemesters = [...semesters];
+    newSemesters[semIndex].courses.splice(courseIndex, 0, course); // restore at original position
+    setSemesters(newSemesters);
+
+    // update removedCourses stack
+    setRemovedCourses(removedCourses.slice(0, -1));
   };
 
   // Function to calculate GPA
@@ -60,6 +89,11 @@ const Calculator = () => {
         >
           Add Semester
         </button>
+        {removedCourses.length > 0 && (
+          <button onClick={handleUndoRemove} className="undo-btn">
+            Undo Remove
+          </button>
+        )}
       </div>
 
       {showAddForm && (
@@ -79,36 +113,34 @@ const Calculator = () => {
             <ul className="semester-course-list">
               {sem.courses.map((c, i) => (
                 <li key={i}>
-                  <span>
-                    {c.code} - {c.title} ({c.credit} credits)
-                  </span>
-                  <select
-                    className="grade-select"
-                    value={c.grade}
-                    onChange={(e) => {
-                      const newSemesters = [...semesters];
-                      newSemesters[sIndex].courses[i].grade = e.target.value;
-                      setSemesters(newSemesters);
-                    }}
-                  >
-                    {Object.keys(gradePoints).map((g) => (
-                      <option key={g} value={g}>
-                        {g}
-                      </option>
-                    ))}
-                  </select>
-
-                  {/* Remove Course Button */}
-                  <button
-                    className="remove-course-btn"
-                    onClick={() => {
-                      const newSemesters = [...semesters];
-                      newSemesters[sIndex].courses.splice(i, 1);
-                      setSemesters(newSemesters);
-                    }}
-                  >
-                    Remove
-                  </button>
+                  <div className="course-info">
+                    <span className="course-details">
+                      {c.code} - {c.title} ({c.credit} credits)
+                    </span>
+                  </div>
+                  <div className="course-controls">
+                    <select
+                      className="grade-select"
+                      value={c.grade}
+                      onChange={(e) => {
+                        const newSemesters = [...semesters];
+                        newSemesters[sIndex].courses[i].grade = e.target.value;
+                        setSemesters(newSemesters);
+                      }}
+                    >
+                      {Object.keys(gradePoints).map((g) => (
+                        <option key={g} value={g}>
+                          {g}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      onClick={() => handleRemoveCourse(sIndex, i)}
+                      className="remove-btn"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>

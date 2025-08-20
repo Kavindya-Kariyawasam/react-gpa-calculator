@@ -97,6 +97,18 @@ const Calculator = () => {
                       </option>
                     ))}
                   </select>
+
+                  {/* Remove Course Button */}
+                  <button
+                    className="remove-course-btn"
+                    onClick={() => {
+                      const newSemesters = [...semesters];
+                      newSemesters[sIndex].courses.splice(i, 1);
+                      setSemesters(newSemesters);
+                    }}
+                  >
+                    Remove
+                  </button>
                 </li>
               ))}
             </ul>

@@ -43,6 +43,14 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Button Container */
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
 /* Add Course Button */
 .add-course-btn {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -58,6 +66,25 @@ body {
 }
 
 .add-course-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Add Semester Button */
+.add-semester-btn {
+  background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-semester-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
@@ -102,54 +129,7 @@ body {
   color: #a0aec0;
 }
 
-/* Grade Select Dropdown */
-.grade-select {
-  margin-left: 12px;
-  padding: 4px 8px;
-  border: 1px solid #e2e8f0;
-  border-radius: 4px;
-  background-color: #ffffff;
-  font-size: 14px;
-  cursor: pointer;
-  transition: border-color 0.3s ease;
-}
-
-.grade-select:focus {
-  outline: none;
-  border-color: #667eea;
-}
-
-.grade-select:hover {
-  border-color: #cbd5e0;
-}
-
-/* GPA Display */
-.gpa-display {
-  margin-top: 20px;
-  font-weight: 600;
-  font-size: 18px;
-  color: #2d3748;
-  text-align: center;
-  padding: 12px;
-  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-  border-radius: 8px;
-  border-left: 4px solid #48bb78;
-}
-
-/* Course Item Enhancement */
-.course-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.course-info {
-  flex: 1;
-  min-width: 200px;
-}
-
+/* Form Buttons */
 .form-buttons {
   display: flex;
   gap: 12px;
@@ -190,6 +170,7 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Error Message */
 .error-message {
   color: #e53e3e;
   background-color: #fed7d7;
@@ -200,52 +181,141 @@ body {
   border-left: 4px solid #e53e3e;
 }
 
-/* Custom Course List */
-.custom-course-list {
-  margin-top: 32px;
+/* Semester Container */
+.semester-container {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
 }
 
-.custom-course-list h3 {
-  margin: 0 0 16px 0;
-  font-size: 18px;
+.semester-container h3 {
   color: #2d3748;
+  font-size: 18px;
   font-weight: 600;
+  margin: 0 0 16px 0;
   padding-bottom: 8px;
   border-bottom: 2px solid #e2e8f0;
 }
 
-.custom-course-list ul {
+/* Semester Course List */
+.semester-course-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.custom-course-list li {
-  padding: 16px 20px;
-  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-  margin-bottom: 12px;
-  border-radius: 8px;
-  font-size: 15px;
-  color: #2d3748;
-  border-left: 4px solid #667eea;
+.semester-course-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: #ffffff;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  border-left: 3px solid #667eea;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.custom-course-list li:hover {
-  transform: translateX(4px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.semester-course-list li:hover {
+  transform: translateX(2px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Grade Select Dropdown */
+.grade-select {
+  margin-left: 12px;
+  padding: 6px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background-color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  min-width: 70px;
+}
+
+.grade-select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.grade-select:hover {
+  border-color: #cbd5e0;
+}
+
+/* Semester Selector */
+.semester-selector {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+  background-color: #f8fafc;
+  cursor: pointer;
+}
+
+.semester-selector:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: #ffffff;
+}
+
+.semester-selector:hover {
+  border-color: #cbd5e0;
+}
+
+/* No Courses Message */
+.no-courses {
+  color: #718096;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+  background-color: #f7fafc;
+  border-radius: 6px;
+  border: 1px dashed #cbd5e0;
+  margin: 0;
+}
+
+/* Semester GPA Display */
+.semester-gpa {
+  font-weight: 600;
+  margin-top: 16px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+  border-radius: 6px;
+  border-left: 4px solid #38b2ac;
+  color: #2d3748;
+  font-size: 15px;
+}
+
+/* Overall GPA Display */
+.overall-gpa {
+  margin-top: 30px;
+  font-size: 22px;
+  font-weight: 700;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+  border-radius: 8px;
+  border-left: 4px solid #e53e3e;
+  color: #2d3748;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
   .app h1 {
     font-size: 2rem;
     margin-bottom: 1.5rem;
-  }
-
-  body {
-    padding: 10px;
   }
 
   .calculator {
@@ -256,14 +326,28 @@ body {
     padding: 16px;
   }
 
-  .course-item {
+  .button-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .add-course-btn,
+  .add-semester-btn {
+    width: 100%;
+  }
+
+  .semester-course-list li {
     flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
+  }
+
+  .semester-selector {
+    width: 100%;
   }
 
   .grade-select {
     margin-left: 0;
-    margin-top: 8px;
     width: 100%;
   }
 
@@ -274,5 +358,10 @@ body {
   .cancel-btn,
   .submit-btn {
     width: 100%;
+  }
+
+  .overall-gpa {
+    font-size: 18px;
+    padding: 14px 18px;
   }
 }

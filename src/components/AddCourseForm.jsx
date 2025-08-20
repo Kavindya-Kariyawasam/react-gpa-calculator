@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
-const AddCourseForm = ({ onAddCourse, onClose }) => {
+const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
   const [course, setCourse] = useState({ code: "", title: "", credit: "" });
+  const [selectedSemester, setSelectedSemester] = useState(0);
   const [error, setError] = useState("");
 
   const validateCourse = () => {
@@ -23,7 +24,10 @@ const AddCourseForm = ({ onAddCourse, onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateCourse()) {
-      onAddCourse({ ...course, credit: parseFloat(course.credit) });
+      onAddCourse(
+        { ...course, credit: parseFloat(course.credit) },
+        selectedSemester
+      );
       onClose();
     }
   };
@@ -33,6 +37,18 @@ const AddCourseForm = ({ onAddCourse, onClose }) => {
       <h3>Add New Course</h3>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
+        <select
+          className="semester-selector"
+          value={selectedSemester}
+          onChange={(e) => setSelectedSemester(parseInt(e.target.value))}
+        >
+          {semesters.map((sem, index) => (
+            <option key={index} value={index}>
+              {sem.name}
+            </option>
+          ))}
+        </select>
+
         <input
           type="text"
           placeholder="Course Code"

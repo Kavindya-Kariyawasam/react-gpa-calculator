@@ -173,17 +173,25 @@ body {
   color: #a0aec0;
 }
 
-/* Semester Selector */
+/* Semester Selector Wrapper */
+.semester-selector-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
 .semester-selector {
   width: 100%;
-  padding: 12px 16px;
-  margin-bottom: 16px;
+  padding: 12px 40px 12px 16px;
   border: 2px solid #e2e8f0;
   border-radius: 8px;
   font-size: 14px;
   transition: border-color 0.3s ease;
   background-color: #f8fafc;
   cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .semester-selector:focus {
@@ -194,6 +202,21 @@ body {
 
 .semester-selector:hover {
   border-color: #cbd5e0;
+}
+
+/* Dropdown icon */
+.semester-selector-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #6b7280;
+  pointer-events: none;
 }
 
 /* Course Input Container */
@@ -234,6 +257,15 @@ body {
   border-radius: 4px;
   margin-top: 8px;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dropdown-header span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .storage-indicator.can-save {
@@ -268,8 +300,12 @@ body {
   padding: 8px 12px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .close-dropdown {

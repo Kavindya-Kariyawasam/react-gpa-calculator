@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
 import StorageService from "../services/StorageService";
+import {
+  IoChevronDown,
+  IoCheckmarkCircle,
+  IoWarning,
+  IoLibrary,
+} from "react-icons/io5";
 
 const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
   const [course, setCourse] = useState({
@@ -152,17 +158,19 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
       {info && <p className="info-message">{info}</p>}
 
       <form onSubmit={handleSubmit}>
-        <select
-          className="semester-selector"
-          value={selectedSemester}
-          onChange={(e) => setSelectedSemester(parseInt(e.target.value))}
-        >
-          {semesters.map((sem, index) => (
-            <option key={index} value={index}>
-              {sem.name}
-            </option>
-          ))}
-        </select>
+        <div className="semester-selector-wrapper">
+          <select
+            className="semester-selector"
+            value={selectedSemester}
+            onChange={(e) => setSelectedSemester(parseInt(e.target.value))}
+          >
+            {semesters.map((sem, index) => (
+              <option key={index} value={index}>
+                {sem.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <div className="course-input-container">
           <input
@@ -222,9 +230,15 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
                 canSaveToStorage() ? "can-save" : "cannot-save"
               }`}
             >
-              {canSaveToStorage()
-                ? "✅ Will be saved to storage"
-                : "⚠️ Won't be saved to storage (missing info)"}
+              {canSaveToStorage() ? (
+                <>
+                  <IoCheckmarkCircle /> Will be saved to storage
+                </>
+              ) : (
+                <>
+                  <IoWarning /> Won't be saved to storage (missing info)
+                </>
+              )}
             </div>
           </div>
 
@@ -232,7 +246,7 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
             <div className="course-dropdown">
               <div className="dropdown-header">
                 <span>
-                  Previously Added Courses ({filteredCourses.length}):
+                  <IoLibrary /> Available Courses ({filteredCourses.length})
                 </span>
                 <button
                   type="button"

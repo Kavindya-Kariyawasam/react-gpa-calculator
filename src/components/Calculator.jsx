@@ -10,6 +10,14 @@ const Calculator = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [removedStack, setRemovedStack] = useState([]); // stack for multiple undo
 
+  // Clears all courses for a specific semester
+  const handleSemesterReset = (semesterIndex) => {
+    const newSemesters = [...semesters];
+    newSemesters[semesterIndex].courses = [];
+    setSemesters(newSemesters);
+    setRemovedStack([]); // Clear undo stack since we're resetting
+  };
+
   const handleReset = () => {
     setSemesters([{ name: "Semester 1", courses: [] }]); // Reset to initial state
     setRemovedStack([]); // Clear undo history
@@ -19,17 +27,17 @@ const Calculator = () => {
   // GPA values for each grade
   const gradePoints = {
     "A+": 4.0,
-    A: 4.0,
+    "A": 4.0,
     "A-": 3.7,
     "B+": 3.3,
-    B: 3.0,
+    "B": 3.0,
     "B-": 2.7,
     "C+": 2.3,
-    C: 2.0,
+    "C": 2.0,
     "C-": 1.7,
     "D+": 1.3,
-    D: 1.0,
-    F: 0.0,
+    "D": 1.0,
+    "F": 0.0,
   };
 
   // Sample modules data for ModuleViewer
@@ -126,7 +134,18 @@ const Calculator = () => {
 
       {semesters.map((sem, sIndex) => (
         <div key={sIndex} className="semester-container">
-          <h3>{sem.name}</h3>
+          <div className="semester-header">
+            <h3>{sem.name}</h3>
+            {sem.courses.length > 0 && (
+              <button
+                onClick={() => handleSemesterReset(sIndex)}
+                className="semester-reset-btn"
+              >
+                Reset Semester
+              </button>
+            )}
+          </div>
+
           {sem.courses.length === 0 ? (
             <p className="no-courses">No courses added yet</p>
           ) : (

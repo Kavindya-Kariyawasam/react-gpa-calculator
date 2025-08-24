@@ -34,19 +34,41 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
     console.log(`Loaded ${savedCourses.length} courses from storage`);
   }, []);
 
+  // Function to check if a course is already used in any semester
+  const isCourseUsed = (courseCode) => {
+    return semesters.some((semester) =>
+      semester.courses.some((course) => course.code === courseCode)
+    );
+  };
+
   // Filter courses based on input
   useEffect(() => {
     if (course.code || course.title) {
       const filtered = StorageService.searchCourses(
         course.code || course.title
       );
-      setFilteredCourses(filtered);
-      setShowDropdown(filtered.length > 0 && (course.code || course.title));
+
+      // Separate used and unused courses
+      const unusedCourses = filtered.filter((c) => !isCourseUsed(c.code));
+      const usedCourses = filtered.filter((c) => isCourseUsed(c.code));
+
+      // Put unused courses first, then used courses
+      const sortedCourses = [...unusedCourses, ...usedCourses];
+
+      setFilteredCourses(sortedCourses);
+      setShowDropdown(
+        sortedCourses.length > 0 && (course.code || course.title)
+      );
     } else {
-      setFilteredCourses(availableCourses);
+      const allCourses = StorageService.getCourses();
+      const unusedCourses = allCourses.filter((c) => !isCourseUsed(c.code));
+      const usedCourses = allCourses.filter((c) => isCourseUsed(c.code));
+      const sortedCourses = [...unusedCourses, ...usedCourses];
+
+      setFilteredCourses(sortedCourses);
       setShowDropdown(false);
     }
-  }, [course.code, course.title, availableCourses]);
+  }, [course.code, course.title, availableCourses, semesters]);
 
   const validateCourse = () => {
     if (!course.code || !course.title || !course.credit) {
@@ -65,6 +87,12 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
   };
 
   const handleSelectCourse = (selectedCourse) => {
+    // Blocking selection of used courses
+    if (isCourseUsed(selectedCourse.code)) {
+      setError(`Course ${selectedCourse.code} is already added to a semester`);
+      return;
+    }
+
     setCourse({
       code: selectedCourse.code,
       title: selectedCourse.name,
@@ -290,48 +318,69 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
                 </div>
               </div>
               <div className="dropdown-content">
-                {filteredCourses.slice(0, 8).map((savedCourse, index) => (
-                  <div key={index} className="dropdown-item">
+                {filteredCourses.slice(0, 8).map((savedCourse, index) => {
+                  const isUsed = isCourseUsed(savedCourse.code);
+                  return (
                     <div
-                      className="course-info"
-                      onClick={() =>
-                        !showManagement && handleSelectCourse(savedCourse)
-                      }
-                      style={{ cursor: showManagement ? "default" : "pointer" }}
+                      key={index}
+                      className={`dropdown-item ${isUsed ? "course-used" : ""}`}
                     >
-                      <div>
-                        <strong>{savedCourse.code}</strong> - {savedCourse.name}
-                        <span className="credit-info">
-                          ({savedCourse.credits} credits)
-                        </span>
+                      <div
+                        className="course-info"
+                        onClick={() =>
+                          !showManagement &&
+                          !isUsed &&
+                          handleSelectCourse(savedCourse)
+                        }
+                        style={{
+                          cursor: showManagement
+                            ? "default"
+                            : isUsed
+                            ? "not-allowed"
+                            : "pointer",
+                          opacity: isUsed ? 0.6 : 1,
+                        }}
+                      >
+                        <div>
+                          <strong>{savedCourse.code}</strong> -{" "}
+                          {savedCourse.name}
+                          <span className="credit-info">
+                            ({savedCourse.credits} credits)
+                          </span>
+                          {isUsed && (
+                            <span className="used-indicator">
+                              ✓ Already Added
+                            </span>
+                          )}
+                        </div>
+                        <div className="course-meta">
+                          {savedCourse.degree} • {savedCourse.university} •{" "}
+                          {savedCourse.country}
+                        </div>
                       </div>
-                      <div className="course-meta">
-                        {savedCourse.degree} • {savedCourse.university} •{" "}
-                        {savedCourse.country}
-                      </div>
+                      {showManagement && (
+                        <div className="course-actions">
+                          <button
+                            type="button"
+                            className="edit-course-btn"
+                            onClick={() => handleEditCourse(savedCourse)}
+                            title="Edit course"
+                          >
+                            <IoCreate />
+                          </button>
+                          <button
+                            type="button"
+                            className="delete-course-btn"
+                            onClick={() => handleDeleteCourse(savedCourse.code)}
+                            title="Delete course"
+                          >
+                            <IoTrash />
+                          </button>
+                        </div>
+                      )}
                     </div>
-                    {showManagement && (
-                      <div className="course-actions">
-                        <button
-                          type="button"
-                          className="edit-course-btn"
-                          onClick={() => handleEditCourse(savedCourse)}
-                          title="Edit course"
-                        >
-                          <IoCreate />
-                        </button>
-                        <button
-                          type="button"
-                          className="delete-course-btn"
-                          onClick={() => handleDeleteCourse(savedCourse.code)}
-                          title="Delete course"
-                        >
-                          <IoTrash />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  );
+                })}
                 {filteredCourses.length > 8 && (
                   <div className="dropdown-more">
                     ... and {filteredCourses.length - 8} more courses

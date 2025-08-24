@@ -206,7 +206,7 @@ body {
 
 /* Dropdown icon */
 .semester-selector-wrapper::after {
-  content: '';
+  content: "";
   position: absolute;
   right: 12px;
   top: 50%;
@@ -272,7 +272,7 @@ body {
   color: #c53030;
 }
 
-/* Course Dropdown - Fixed Layout */
+/* Course Dropdown */
 .course-dropdown {
   position: absolute;
   top: 100%;
@@ -359,7 +359,7 @@ body {
   max-height: 220px;
 }
 
-/* Dropdown Item - Fixed Layout */
+/* Dropdown Item */
 .dropdown-item {
   display: flex;
   justify-content: space-between;
@@ -384,6 +384,36 @@ body {
   font-weight: 600;
 }
 
+/* Used Course Styling */
+.dropdown-item.course-used {
+  background-color: #f8f9fa;
+  border-left: 3px solid #e2e8f0;
+}
+
+.dropdown-item.course-used:hover {
+  background-color: #f1f3f4;
+  cursor: not-allowed;
+}
+
+.dropdown-item.course-used .course-info {
+  color: #6c757d;
+}
+
+.dropdown-item.course-used strong {
+  color: #6c757d !important;
+}
+
+.used-indicator {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 500;
+  margin-left: 8px;
+  border: 1px solid #c3e6cb;
+}
+
 /* Course Info */
 .course-info {
   flex: 1;
@@ -404,7 +434,7 @@ body {
   margin-left: 8px;
 }
 
-/* Course Actions - Simplified */
+/* Course Actions */
 .course-actions {
   display: flex;
   gap: 4px;
@@ -868,6 +898,17 @@ body {
     align-items: flex-start;
     gap: 8px;
     min-height: auto;
+  }
+
+  /* Used Course Indicator */
+  .used-indicator {
+    font-size: 9px;
+    padding: 1px 4px;
+    margin-left: 4px;
+  }
+  
+  .dropdown-item.course-used {
+    border-left: 2px solid #e2e8f0;
   }
 
   .course-actions {

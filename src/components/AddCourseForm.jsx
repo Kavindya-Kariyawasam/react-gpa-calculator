@@ -299,10 +299,12 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
                       }
                       style={{ cursor: showManagement ? "default" : "pointer" }}
                     >
-                      <strong>{savedCourse.code}</strong> - {savedCourse.name}
-                      <span className="credit-info">
-                        ({savedCourse.credits} credits)
-                      </span>
+                      <div>
+                        <strong>{savedCourse.code}</strong> - {savedCourse.name}
+                        <span className="credit-info">
+                          ({savedCourse.credits} credits)
+                        </span>
+                      </div>
                       <div className="course-meta">
                         {savedCourse.degree} • {savedCourse.university} •{" "}
                         {savedCourse.country}

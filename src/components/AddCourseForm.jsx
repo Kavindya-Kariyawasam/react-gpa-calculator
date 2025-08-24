@@ -101,10 +101,14 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
       university: selectedCourse.university || "",
       country: selectedCourse.country || "",
     });
-    setShowDropdown(false);
+
     setIsCustomEntry(false);
     setInfo(`Selected course from storage: ${selectedCourse.code}`);
     setError("");
+
+    setTimeout(() => {
+      setShowDropdown(false);
+    }, 0);
   };
 
   const handleInputChange = (field, value) => {

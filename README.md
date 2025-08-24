@@ -1,86 +1,126 @@
 # 🎓 GPA Calculator
 
-A simple and interactive GPA Calculator built with **React.js**.  
-This app allows students to manage their courses semester by semester, assign grades, and calculate their GPA dynamically.
+A smart and interactive GPA Calculator built with **React.js** that helps students manage courses, calculate GPAs, and build a personal course library.
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-- ➕ Add courses with **course code, title, credits, and semester**  
-- 🎯 Assign **grades (A, B+, B, C+, …, F)** to each course  
-- 📊 Calculate GPA automatically based on courses and credits  
-- 📚 Support for **multiple semesters**  
-- ❌ Remove courses from a semester  
-- 🎨 Simple UI with basic styling (global CSS)  
-- ⚡ Real-time GPA calculation as you update grades  
+### 📚 Course Management
+- ➕ **Add courses** with code, title, credits, and grades
+- 🔍 **Smart course search** with auto-complete dropdown
+- 💾 **Course library** that saves courses for future semesters
+- ✏️ **Edit/Delete** saved courses from your library
+- 🚫 **Duplicate prevention** - used courses are visually marked
+
+### 📊 GPA Calculation
+- 🎯 **Real-time GPA calculation** as you update grades
+- 📈 **Semester-wise GPA** display for each semester
+- 🏆 **Overall cumulative GPA** across all semesters
+- 📋 **Module viewer** showing all courses in a table format
+
+### 🗂️ Semester Organization
+- 📚 **Multiple semester support** with custom naming
+- ❌ **Remove courses** from specific semesters
+- 🔄 **Semester reset** with undo functionality
+- ⚡ **Dynamic semester addition**
+
+### 🎨 User Experience
+- 💡 **Intelligent form validation** with helpful error messages
+- 🔄 **Undo system** for accidental changes
+- 📱 **Responsive design** for mobile and desktop
+- 🎨 **Modern UI** with clean styling and hover effects
+
+### 💾 Data Persistence
+- 🏠 **Local storage** keeps your data safe
+- 📈 **Metadata support** - degree, university, country tracking
+- 🔍 **Advanced search** across all course fields
+- 📊 **Course usage tracking** prevents duplicates
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **React.js** (Frontend library)  
-- **CSS** (Styling, global stylesheet)  
+- **React.js** (Frontend framework)
+- **React Icons** (Icon library)
+- **CSS3** (Modern styling with gradients and animations)
+- **localStorage** (Client-side data persistence)
+
+---
+
+## 🚀 Getting Started
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+
+# Navigate to project directory
+cd react-gpa-calculator
+
+# Install dependencies
+npm install
+
+# Start development server
+npm start
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
 ---
 
 ## 📂 Project Structure
 
 ```plaintext
-gpa-calculator/
-│
-├── public/              # Static files
+react-gpa-calculator/
+├── public/
 ├── src/
 │   ├── components/
-│   │   ├── Calculator.js       # Main GPA calculator logic
-│   │   ├── AddCourseForm.js    # Form for adding new courses
-│   │
-│   ├── App.js                 # Root component
-│   ├── App.css                # Global styles
-│   └── index.js               # React entry point
-│
+│   │   ├── AddCourseForm.jsx      # Smart course addition form
+│   │   ├── Calculator.jsx         # Main GPA calculator
+│   │   └── ModuleViewer.jsx       # Course overview table
+│   ├── services/
+│   │   └── StorageService.js      # Data persistence service
+│   ├── App.js                     # Main application component
+│   ├── App.css                    # Global styles
+│   └── index.js                   # Application entry point
 ├── package.json
 └── README.md
 ```
 
-## 🚀 Getting Started
+---
 
-### Prerequisites
-- **Node.js** ≥ 18 and **npm** ≥ 9  
-  Check your versions:
-  ```bash
-  node -v
-  npm -v
+## 🎯 How It Works
 
-### Installation
+### Adding Courses
+1. Click **"Add Course"** button
+2. Type course code/title to see suggestions from your library
+3. Fill in course details (metadata optional but recommended)
+4. Select target semester and submit
 
-#### 1. Clone the repository and enter the project folder:
+### Building Your Course Library
+- Courses with complete metadata (degree, university, country) are automatically saved
+- Saved courses appear in dropdown for future semesters
+- Edit or delete courses from your library using "Manage" mode
 
-git clone https://github.com/your-username/gpa-calculator.git
-cd gpa-calculator
+### GPA Calculation
+- Assign grades (A, B+, B, C+, C, D+, D, F) to each course
+- GPA is calculated using 4.0 scale with credit weighting
+- View semester GPAs and overall cumulative GPA
 
-#### 2. Install dependencies:
+### Smart Features
+- **Duplicate Prevention**: Already used courses are grayed out
+- **Undo System**: Revert accidental deletions or resets
+- **Real-time Updates**: GPA updates instantly when grades change
+- **Responsive Design**: Works seamlessly on all devices
 
-npm install
+---
 
-### Run the app (development)
+## 🔮 Future Enhancements
 
-npm start
+- 🌐 **Cloud storage** with user accounts
+- 🎓 **University course databases**
+- 📤 **Export/Import** functionality
+- 📊 **Grade analytics** and progress tracking
+- 👥 **Course sharing** with classmates
 
-## Usage
-
-📖 Usage
-
-Click Add Course to open the form.
-
-Pick a Semester from the dropdown.
-
-Enter Course Code, Title, and Credits, then Add Course.
-
-In each semester block, use the Grade dropdown to assign a grade.
-
-View the Semester GPA at the bottom of each semester.
-
-The Overall GPA appears at the bottom once at least one course exists.
-
-Grade points used: A+/A (4.0), A- (3.7), B+ (3.3), B (3.0), B- (2.7), C+ (2.3), C (2.0), C- (1.7), D+ (1.3), D (1.0), F (0.0)
+---

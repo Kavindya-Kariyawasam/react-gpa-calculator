@@ -8,20 +8,45 @@ const Calculator = () => {
     { name: "Semester 1", courses: [] },
   ]);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [removedStack, setRemovedStack] = useState([]); // stack for multiple undo
+  const [undoStack, setUndoStack] = useState([]); // Enhanced undo stack for multiple action types
 
   // Clears all courses for a specific semester
   const handleSemesterReset = (semesterIndex) => {
+    const semesterToReset = semesters[semesterIndex];
+    
+    // Only proceed if there are courses to reset
+    if (semesterToReset.courses.length === 0) return;
+
+    // Save current state for undo
+    const undoAction = {
+      type: 'SEMESTER_RESET',
+      semesterIndex,
+      courses: [...semesterToReset.courses], // Deep copy of courses
+      semesterName: semesterToReset.name
+    };
+
+    // Reset the semester
     const newSemesters = [...semesters];
     newSemesters[semesterIndex].courses = [];
     setSemesters(newSemesters);
-    setRemovedStack([]); // Clear undo stack since we're resetting
+
+    // Add to undo stack
+    setUndoStack([...undoStack, undoAction]);
   };
 
   const handleReset = () => {
-    setSemesters([{ name: "Semester 1", courses: [] }]); // Reset to initial state
-    setRemovedStack([]); // Clear undo history
-    setShowAddForm(false); // Close add form if open
+    // Save current state for undo
+    const undoAction = {
+      type: 'FULL_RESET',
+      semesters: [...semesters] // Deep copy of all semesters
+    };
+
+    // Reset to initial state
+    setSemesters([{ name: "Semester 1", courses: [] }]);
+    setShowAddForm(false);
+
+    // Add to undo stack
+    setUndoStack([...undoStack, undoAction]);
   };
 
   // GPA values for each grade
@@ -63,20 +88,50 @@ const Calculator = () => {
     newSemesters[semIndex].courses.splice(courseIndex, 1);
     setSemesters(newSemesters);
 
-    setRemovedStack([
-      ...removedStack,
-      { course: courseToRemove, semIndex, courseIndex },
-    ]);
+    // Add to undo stack
+    const undoAction = {
+      type: 'COURSE_REMOVE',
+      course: courseToRemove,
+      semIndex,
+      courseIndex
+    };
+
+    setUndoStack([...undoStack, undoAction]);
   };
 
   const handleUndo = () => {
-    if (removedStack.length === 0) return;
-    const lastRemoved = removedStack[removedStack.length - 1];
-    const { course, semIndex, courseIndex } = lastRemoved;
+    if (undoStack.length === 0) return;
+
+    const lastAction = undoStack[undoStack.length - 1];
     const newSemesters = [...semesters];
-    newSemesters[semIndex].courses.splice(courseIndex, 0, course);
+
+    switch (lastAction.type) {
+      case 'COURSE_REMOVE':
+        // Restore removed course
+        newSemesters[lastAction.semIndex].courses.splice(
+          lastAction.courseIndex, 
+          0, 
+          lastAction.course
+        );
+        break;
+
+      case 'SEMESTER_RESET':
+        // Restore all courses to the reset semester
+        newSemesters[lastAction.semesterIndex].courses = [...lastAction.courses];
+        break;
+
+      case 'FULL_RESET':
+        // Restore all semesters
+        setSemesters([...lastAction.semesters]);
+        setUndoStack(undoStack.slice(0, -1));
+        return;
+
+      default:
+        break;
+    }
+
     setSemesters(newSemesters);
-    setRemovedStack(removedStack.slice(0, -1));
+    setUndoStack(undoStack.slice(0, -1));
   };
 
   // Function to calculate GPA
@@ -95,6 +150,23 @@ const Calculator = () => {
   // Check if there's any data to reset
   const hasData = modules.length > 0 || semesters.length > 1;
 
+  // Get the last action type for better undo button text
+  const getUndoButtonText = () => {
+    if (undoStack.length === 0) return "Undo";
+    
+    const lastAction = undoStack[undoStack.length - 1];
+    switch (lastAction.type) {
+      case 'COURSE_REMOVE':
+        return `Undo Remove (${undoStack.length})`;
+      case 'SEMESTER_RESET':
+        return `Undo Reset (${undoStack.length})`;
+      case 'FULL_RESET':
+        return `Undo Full Reset (${undoStack.length})`;
+      default:
+        return `Undo (${undoStack.length})`;
+    }
+  };
+
   return (
     <div className="calculator">
       <div className="button-container">
@@ -112,9 +184,9 @@ const Calculator = () => {
         >
           Add Semester
         </button>
-        {removedStack.length > 0 && (
+        {undoStack.length > 0 && (
           <button onClick={handleUndo} className="undo-btn">
-            Undo ({removedStack.length})
+            {getUndoButtonText()}
           </button>
         )}
         {hasData && (

@@ -196,10 +196,152 @@ body {
   border-color: #cbd5e0;
 }
 
+/* Course Input Container */
+.course-input-container {
+  position: relative;
+}
+
+/* Metadata Fields */
+.metadata-fields {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.metadata-fields input {
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #4a5568;
+}
+
+.metadata-fields input::placeholder {
+  color: #a0aec0;
+  font-style: italic;
+}
+
+/* Metadata Note */
+.metadata-note {
+  font-size: 12px;
+  color: #4a5568;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* Storage Indicator */
+.storage-indicator {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.storage-indicator.can-save {
+  background-color: #c6f6d5;
+  color: #2d5a27;
+}
+
+.storage-indicator.cannot-save {
+  background-color: #fed7d7;
+  color: #c53030;
+}
+
+/* Course Dropdown */
+.course-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.close-dropdown {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-dropdown:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+.dropdown-item {
+  padding: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f7fafc;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item strong {
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* Enhanced dropdown styling for metadata */
+.course-info {
+  flex: 1;
+}
+
+.course-meta {
+  font-size: 11px;
+  color: #718096;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+.credit-info {
+  color: #718096;
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+.dropdown-more {
+  padding: 8px 12px;
+  color: #718096;
+  font-style: italic;
+  font-size: 12px;
+  text-align: center;
+  background-color: #f7fafc;
+}
+
 /* Form Buttons */
 .form-buttons {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   justify-content: center;
   margin-top: 20px;
 }
@@ -218,6 +360,24 @@ body {
 
 .cancel-btn:hover {
   background-color: #cbd5e0;
+}
+
+/* Clear Button */
+.clear-btn {
+  background-color: #f7fafc;
+  color: #4a5568;
+  border: 1px solid #e2e8f0;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clear-btn:hover {
+  background-color: #edf2f7;
+  border-color: #cbd5e0;
 }
 
 .submit-btn {
@@ -246,6 +406,17 @@ body {
   margin-bottom: 16px;
   font-size: 14px;
   border-left: 4px solid #e53e3e;
+}
+
+/* Info Message */
+.info-message {
+  color: #2d5a27;
+  background-color: #c6f6d5;
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  border-left: 4px solid #38a169;
 }
 
 /* Semester Container */
@@ -553,6 +724,7 @@ body {
   }
 
   .cancel-btn,
+  .clear-btn,
   .submit-btn {
     width: 100%;
   }
@@ -569,5 +741,22 @@ body {
   .module-viewer th,
   .module-viewer td {
     padding: 8px 4px;
+  }
+
+  .course-dropdown {
+    max-height: 200px;
+  }
+
+  .dropdown-item {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .metadata-fields input {
+    font-size: 12px;
+  }
+
+  .course-meta {
+    font-size: 10px;
   }
 }

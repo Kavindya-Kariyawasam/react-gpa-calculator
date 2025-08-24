@@ -89,6 +89,50 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* Undo Button */
+.undo-btn {
+  background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.undo-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Reset Button */
+.reset-btn {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reset-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #c53030 0%, #9c2a2a 100%);
+}
+
+.reset-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 /* AddCourseForm */
 .add-course-form {
   margin-top: 24px;
@@ -129,10 +173,323 @@ body {
   color: #a0aec0;
 }
 
+/* Semester Selector Wrapper */
+.semester-selector-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.semester-selector {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+  background-color: #f8fafc;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.semester-selector:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: #ffffff;
+}
+
+.semester-selector:hover {
+  border-color: #cbd5e0;
+}
+
+/* Dropdown icon */
+.semester-selector-wrapper::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #6b7280;
+  pointer-events: none;
+}
+
+/* Course Input Container */
+.course-input-container {
+  position: relative;
+}
+
+/* Metadata Fields */
+.metadata-fields {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.metadata-fields input {
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #4a5568;
+}
+
+.metadata-fields input::placeholder {
+  color: #a0aec0;
+  font-style: italic;
+}
+
+/* Metadata Note */
+.metadata-note {
+  font-size: 12px;
+  color: #4a5568;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* Storage Indicator */
+.storage-indicator {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.storage-indicator.can-save {
+  background-color: #c6f6d5;
+  color: #2d5a27;
+}
+
+.storage-indicator.cannot-save {
+  background-color: #fed7d7;
+  color: #c53030;
+}
+
+/* Course Dropdown */
+.course-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  max-height: 280px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dropdown-header span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Header Actions */
+.header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.manage-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.manage-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.close-dropdown {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-dropdown:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+/* Dropdown Content */
+.dropdown-content {
+  overflow-y: auto;
+  flex: 1;
+  max-height: 220px;
+}
+
+/* Dropdown Item */
+.dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.2s ease;
+  min-height: 60px;
+}
+
+.dropdown-item:hover {
+  background-color: #f7fafc;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item strong {
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* Used Course Styling */
+.dropdown-item.course-used {
+  background-color: #f8f9fa;
+  border-left: 3px solid #e2e8f0;
+}
+
+.dropdown-item.course-used:hover {
+  background-color: #f1f3f4;
+  cursor: not-allowed;
+}
+
+.dropdown-item.course-used .course-info {
+  color: #6c757d;
+}
+
+.dropdown-item.course-used strong {
+  color: #6c757d !important;
+}
+
+.used-indicator {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 500;
+  margin-left: 8px;
+  border: 1px solid #c3e6cb;
+}
+
+/* Course Info */
+.course-info {
+  flex: 1;
+  min-width: 0;
+  margin-right: 8px;
+}
+
+.course-meta {
+  font-size: 11px;
+  color: #718096;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+.credit-info {
+  color: #718096;
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+/* Course Actions */
+.course-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.edit-course-btn,
+.delete-course-btn {
+  padding: 6px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  min-width: 28px;
+  min-height: 28px;
+}
+
+.edit-course-btn {
+  background: #e6fffa;
+  color: #00a3c4;
+}
+
+.edit-course-btn:hover {
+  background: #b2f5ea;
+  transform: scale(1.1);
+}
+
+.delete-course-btn {
+  background: #fed7d7;
+  color: #e53e3e;
+}
+
+.delete-course-btn:hover {
+  background: #feb2b2;
+  transform: scale(1.1);
+}
+
+.dropdown-more {
+  padding: 8px 12px;
+  color: #718096;
+  font-style: italic;
+  font-size: 12px;
+  text-align: center;
+  background-color: #f7fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
 /* Form Buttons */
 .form-buttons {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   justify-content: center;
   margin-top: 20px;
 }
@@ -151,6 +508,24 @@ body {
 
 .cancel-btn:hover {
   background-color: #cbd5e0;
+}
+
+/* Clear Button */
+.clear-btn {
+  background-color: #f7fafc;
+  color: #4a5568;
+  border: 1px solid #e2e8f0;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clear-btn:hover {
+  background-color: #edf2f7;
+  border-color: #cbd5e0;
 }
 
 .submit-btn {
@@ -181,6 +556,17 @@ body {
   border-left: 4px solid #e53e3e;
 }
 
+/* Info Message */
+.info-message {
+  color: #2d5a27;
+  background-color: #c6f6d5;
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  border-left: 4px solid #38a169;
+}
+
 /* Semester Container */
 .semester-container {
   margin-top: 30px;
@@ -190,13 +576,47 @@ body {
   border: 1px solid #e2e8f0;
 }
 
-.semester-container h3 {
+/* Semester Header */
+.semester-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.semester-header h3 {
+  margin: 0;
   color: #2d3748;
   font-size: 18px;
   font-weight: 600;
-  margin: 0 0 16px 0;
   padding-bottom: 8px;
   border-bottom: 2px solid #e2e8f0;
+  flex: 1;
+}
+
+/* Semester Reset Button */
+.semester-reset-btn {
+  background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.semester-reset-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #ed8936 0%, #dd7324 100%);
+}
+
+.semester-reset-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 /* Semester Course List */
@@ -224,6 +644,19 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
+/* Course Info and Controls Layout */
+.course-details {
+  font-size: 15px;
+  color: #2d3748;
+  font-weight: 500;
+}
+
+.course-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
 /* Grade Select Dropdown */
 .grade-select {
   margin-left: 12px;
@@ -246,27 +679,23 @@ body {
   border-color: #cbd5e0;
 }
 
-/* Semester Selector */
-.semester-selector {
-  width: 100%;
-  padding: 12px 16px;
-  margin-bottom: 16px;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: border-color 0.3s ease;
-  background-color: #f8fafc;
+/* Remove Course Button */
+.remove-btn {
+  background: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
-.semester-selector:focus {
-  outline: none;
-  border-color: #667eea;
-  background-color: #ffffff;
-}
-
-.semester-selector:hover {
-  border-color: #cbd5e0;
+.remove-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* No Courses Message */
@@ -293,15 +722,72 @@ body {
   font-size: 15px;
 }
 
+/* Module Viewer */
+.module-viewer {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.module-viewer h3 {
+  color: #2d3748;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.module-viewer table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.module-viewer th,
+.module-viewer td {
+  border: 1px solid #e2e8f0;
+  padding: 12px 8px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.module-viewer th {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.module-viewer td {
+  color: #2d3748;
+}
+
+.module-viewer tbody tr:nth-child(even) {
+  background-color: #f7fafc;
+}
+
+.module-viewer tbody tr:hover {
+  background-color: #edf2f7;
+  transition: background-color 0.2s ease;
+}
+
 /* Overall GPA Display */
 .overall-gpa {
   margin-top: 30px;
   font-size: 22px;
   font-weight: 700;
   padding: 18px 24px;
-  background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+  background: linear-gradient(135deg, #fef5e7 0%, #fed7aa 100%);
   border-radius: 8px;
-  border-left: 4px solid #e53e3e;
+  border-left: 4px solid #f59e0b;
   color: #2d3748;
   text-align: center;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
@@ -332,23 +818,44 @@ body {
   }
 
   .add-course-btn,
-  .add-semester-btn {
+  .add-semester-btn,
+  .undo-btn,
+  .reset-btn {
+    width: 100%;
+  }
+
+  .semester-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .semester-reset-btn {
+    width: 100%;
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .course-controls {
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .course-info {
     width: 100%;
   }
 
   .semester-course-list li {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: 12px;
   }
 
-  .semester-selector {
+  .grade-select,
+  .remove-btn {
     width: 100%;
-  }
-
-  .grade-select {
     margin-left: 0;
-    width: 100%;
   }
 
   .form-buttons {
@@ -356,6 +863,7 @@ body {
   }
 
   .cancel-btn,
+  .clear-btn,
   .submit-btn {
     width: 100%;
   }
@@ -363,5 +871,62 @@ body {
   .overall-gpa {
     font-size: 18px;
     padding: 14px 18px;
+  }
+
+  .module-viewer table {
+    font-size: 12px;
+  }
+
+  .module-viewer th,
+  .module-viewer td {
+    padding: 8px 4px;
+  }
+
+  /* Mobile dropdown fixes */
+  .course-dropdown {
+    max-height: 250px;
+    left: -10px;
+    right: -10px;
+  }
+
+  .dropdown-content {
+    max-height: 180px;
+  }
+
+  .dropdown-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    min-height: auto;
+  }
+
+  /* Used Course Indicator */
+  .used-indicator {
+    font-size: 9px;
+    padding: 1px 4px;
+    margin-left: 4px;
+  }
+  
+  .dropdown-item.course-used {
+    border-left: 2px solid #e2e8f0;
+  }
+
+  .course-actions {
+    align-self: flex-end;
+  }
+
+  .edit-course-btn,
+  .delete-course-btn {
+    padding: 8px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .metadata-fields input {
+    font-size: 12px;
+  }
+
+  .course-meta {
+    font-size: 10px;
   }
 }

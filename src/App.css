@@ -327,7 +327,33 @@ body {
   border-radius: 50%;
 }
 
+/* Header Actions */
+.header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.manage-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.manage-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Dropdown item management */
 .dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   padding: 12px;
   cursor: pointer;
   border-bottom: 1px solid #e2e8f0;
@@ -345,6 +371,44 @@ body {
 .dropdown-item strong {
   color: #667eea;
   font-weight: 600;
+}
+
+/* Course actions */
+.course-actions {
+  display: flex;
+  gap: 4px;
+  margin-left: 8px;
+}
+
+.edit-course-btn,
+.delete-course-btn {
+  padding: 4px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.edit-course-btn {
+  background: #e6fffa;
+  color: #00a3c4;
+}
+
+.edit-course-btn:hover {
+  background: #b2f5ea;
+}
+
+.delete-course-btn {
+  background: #fed7d7;
+  color: #e53e3e;
+}
+
+.delete-course-btn:hover {
+  background: #feb2b2;
 }
 
 /* Enhanced dropdown styling for metadata */

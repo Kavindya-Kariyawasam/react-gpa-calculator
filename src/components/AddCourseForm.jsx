@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import StorageService from "../services/StorageService";
 import {
-  IoChevronDown,
   IoCheckmarkCircle,
   IoWarning,
   IoLibrary,
+  IoTrash,
+  IoCreate,
 } from "react-icons/io5";
 
 const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
@@ -23,6 +24,8 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [isCustomEntry, setIsCustomEntry] = useState(true);
+  const [showManagement, setShowManagement] = useState(false);
+  const [editingCourse, setEditingCourse] = useState(null);
 
   // Load available courses on component mount
   useEffect(() => {
@@ -151,6 +154,30 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
     );
   };
 
+  const handleDeleteCourse = (courseCode) => {
+    if (window.confirm(`Delete course ${courseCode} from saved courses?`)) {
+      StorageService.deleteCourse(courseCode);
+      setAvailableCourses(StorageService.getCourses());
+      setInfo(`Course ${courseCode} deleted from storage`);
+    }
+  };
+
+  const handleEditCourse = (courseToEdit) => {
+    setCourse({
+      code: courseToEdit.code,
+      title: courseToEdit.name,
+      credit: courseToEdit.credits.toString(),
+      degree: courseToEdit.degree,
+      university: courseToEdit.university,
+      country: courseToEdit.country,
+    });
+    setEditingCourse(courseToEdit.code);
+    setShowManagement(false);
+    setIsCustomEntry(true);
+    setShowDropdown(false);
+    setInfo(`Editing course: ${courseToEdit.code}`);
+  };
+
   return (
     <div className="add-course-form">
       <h3>Add New Course</h3>
@@ -182,7 +209,6 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
             }
             onFocus={() => setShowDropdown(filteredCourses.length > 0)}
           />
-
           <input
             type="text"
             placeholder="Course Title"
@@ -190,7 +216,6 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
             onChange={(e) => handleInputChange("title", e.target.value)}
             onFocus={() => setShowDropdown(filteredCourses.length > 0)}
           />
-
           <input
             type="number"
             step="0.5"
@@ -198,7 +223,6 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
             value={course.credit}
             onChange={(e) => handleInputChange("credit", e.target.value)}
           />
-
           {/* Optional metadata fields with storage indicator */}
           <div className="metadata-fields">
             <div className="metadata-note">
@@ -248,37 +272,70 @@ const AddCourseForm = ({ semesters, onAddCourse, onClose }) => {
                 <span>
                   <IoLibrary /> Available Courses ({filteredCourses.length})
                 </span>
-                <button
-                  type="button"
-                  className="close-dropdown"
-                  onClick={() => setShowDropdown(false)}
-                >
-                  ×
-                </button>
+                <div className="header-actions">
+                  <button
+                    type="button"
+                    className="manage-btn"
+                    onClick={() => setShowManagement(!showManagement)}
+                  >
+                    {showManagement ? "Done" : "Manage"}
+                  </button>
+                  <button
+                    type="button"
+                    className="close-dropdown"
+                    onClick={() => setShowDropdown(false)}
+                  >
+                    ×
+                  </button>
+                </div>
               </div>
-              {filteredCourses.slice(0, 8).map((savedCourse, index) => (
-                <div
-                  key={index}
-                  className="dropdown-item"
-                  onClick={() => handleSelectCourse(savedCourse)}
-                >
-                  <div className="course-info">
-                    <strong>{savedCourse.code}</strong> - {savedCourse.name}
-                    <span className="credit-info">
-                      ({savedCourse.credits} credits)
-                    </span>
+              <div className="dropdown-content">
+                {filteredCourses.slice(0, 8).map((savedCourse, index) => (
+                  <div key={index} className="dropdown-item">
+                    <div
+                      className="course-info"
+                      onClick={() =>
+                        !showManagement && handleSelectCourse(savedCourse)
+                      }
+                      style={{ cursor: showManagement ? "default" : "pointer" }}
+                    >
+                      <strong>{savedCourse.code}</strong> - {savedCourse.name}
+                      <span className="credit-info">
+                        ({savedCourse.credits} credits)
+                      </span>
+                      <div className="course-meta">
+                        {savedCourse.degree} • {savedCourse.university} •{" "}
+                        {savedCourse.country}
+                      </div>
+                    </div>
+                    {showManagement && (
+                      <div className="course-actions">
+                        <button
+                          type="button"
+                          className="edit-course-btn"
+                          onClick={() => handleEditCourse(savedCourse)}
+                          title="Edit course"
+                        >
+                          <IoCreate />
+                        </button>
+                        <button
+                          type="button"
+                          className="delete-course-btn"
+                          onClick={() => handleDeleteCourse(savedCourse.code)}
+                          title="Delete course"
+                        >
+                          <IoTrash />
+                        </button>
+                      </div>
+                    )}
                   </div>
-                  <div className="course-meta">
-                    {savedCourse.degree} • {savedCourse.university} •{" "}
-                    {savedCourse.country}
+                ))}
+                {filteredCourses.length > 8 && (
+                  <div className="dropdown-more">
+                    ... and {filteredCourses.length - 8} more courses
                   </div>
-                </div>
-              ))}
-              {filteredCourses.length > 8 && (
-                <div className="dropdown-more">
-                  ... and {filteredCourses.length - 8} more courses
-                </div>
-              )}
+                )}
+              </div>
             </div>
           )}
         </div>
